@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Btn} from '../../components';
+import {Btn, Header} from '../../components';
 import {TimerClock} from './timerClock';
 
 interface Props {}
@@ -14,24 +14,50 @@ export const Home = (props: Props) => {
     setIsRunning(true);
     // set the timer state from false to true
   };
-
-  const onCancel = () => {
-    console.log('on cancel called...');
+  const onReset = () => {
     setIsRunning(false);
-    // restart state
+  };
+
+  const onFinish = () => {
+    setIsRunning(false);
+  };
+
+  const onPause = () => {
+    console.log('pause the clock.');
   };
 
   return (
-    <SafeAreaView>
-      <TimerClock isRunning={isRunning} timer={timer} setTime={setTimer} />
-      <View style={styles.buttonContainer}>
-        <Btn text={'Set Timer'} onClick={onSetTimer} />
-        <Btn text={'Cancel'} onClick={onCancel} />
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.mainContainer}>
+        <TimerClock isRunning={isRunning} timer={timer} setTime={setTimer} />
+        <View style={styles.buttonContainer}>
+          {isRunning ? (
+            <>
+              <Btn text={'Pause'} onClick={onPause} />
+              <Btn text={'Finish'} onClick={onFinish} />
+            </>
+          ) : (
+            <>
+              <Btn text={'Start'} onClick={onSetTimer} />
+              <Btn text={'Reset'} onClick={onReset} />
+            </>
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {},
+  container: {backgroundColor: 'orange', flex: 1},
+  mainContainer: {
+    marginTop: 150,
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
 });
