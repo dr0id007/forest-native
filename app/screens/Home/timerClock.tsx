@@ -8,13 +8,19 @@ interface Props {
   timer: number;
   onClick?: Function;
   setTime?: Function;
+  onTimerPress?: Function;
 }
 
-export const TimerClock = ({isRunning, timer, setTime}: Props) => {
+export const TimerClock = ({
+  isRunning,
+  timer,
+  setTime,
+  onTimerPress,
+}: Props) => {
   if (isRunning)
     return (
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{paddingTop: 40, paddingBottom: 10}}>
+        <View style={{paddingTop: 53, paddingBottom: 10}}>
           <UrgeWithPleasureComponent
             size={300}
             value={timer * 60}
@@ -31,6 +37,7 @@ export const TimerClock = ({isRunning, timer, setTime}: Props) => {
       dialRadius={145}
       strokeWidth={10}
       dialWidth={10}
+      onTextPress={onTimerPress}
     />
   );
 };

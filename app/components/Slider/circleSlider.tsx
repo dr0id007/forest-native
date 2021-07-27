@@ -1,5 +1,11 @@
 import React, {FC, useState, useRef, useCallback} from 'react';
-import {PanResponder, Dimensions, Text as T, View} from 'react-native';
+import {
+  PanResponder,
+  Dimensions,
+  Text as T,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Svg, {Path, Circle, G, Text} from 'react-native-svg';
 
 interface Props {
@@ -21,6 +27,7 @@ interface Props {
   initialTime?: number;
   time?: number;
   setTime?: Function;
+  onTextPress?: Function;
 }
 
 const CircleSlider: FC<Props> = ({
@@ -42,6 +49,7 @@ const CircleSlider: FC<Props> = ({
   // innerText = 'hey',
   time = 10,
   setTime = () => {},
+  onTextPress = () => {},
 }) => {
   const [angle, setAngle] = useState(value);
 
@@ -141,9 +149,25 @@ const CircleSlider: FC<Props> = ({
   return (
     <View style={{alignItems: 'center', justifyContent: 'center'}}>
       <View>
-        <T style={{textAlign: 'center', top: dR + 25, fontSize: 24}}>
-          {renderTime(time)}
-        </T>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            marginHorizontal: 50,
+            top: dR + 35,
+            zIndex: 2,
+          }}
+          onPress={() => {
+            onTextPress();
+          }}>
+          <T
+            style={{
+              textAlign: 'center',
+              fontSize: 35,
+              color: 'white',
+            }}>
+            {renderTime(time)}
+          </T>
+        </TouchableOpacity>
         <Svg width={width} height={width}>
           <Circle
             r={dR}

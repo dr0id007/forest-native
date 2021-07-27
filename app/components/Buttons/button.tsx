@@ -29,14 +29,17 @@ export const Btn = ({text, icon, onClick}: Props) => {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#67D1AD',
     margin: 10,
     padding: 10,
     paddingHorizontal: 25,
-    borderRadius: 10,
-    elevation: 10,
+    borderRadius: 8,
+    // elevation: 2,
+    borderBottomColor: '#278064',
+    borderBottomWidth: 4,
   },
   text: {
+    color: 'white',
     fontSize: 18,
   },
 });

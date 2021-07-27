@@ -11,25 +11,20 @@ const Drawer = createDrawerNavigator();
 const AppRoutes = () => {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-
-          headerStyle: {backgroundColor: '#111', height: 60},
-        }}
-        initialRouteName={'Home'}>
-        <Stack.Screen name={APP_ROUTES.Home} component={Home} />
-        <Stack.Screen name={APP_ROUTES.Start} component={Start} />
-      </Stack.Navigator> */}
       <Drawer.Navigator
-        screenOptions={{
-          headerShown: false,
-
-          headerStyle: {backgroundColor: '#111', height: 60},
+        drawerStyle={{
+          backgroundColor: '#50A387',
+          width: 190,
+        }}
+        drawerContentOptions={{
+          activeTintColor: 'white',
+          activeBackgroundColor: '#89C0AD',
+          inactiveTintColor: 'white',
+          itemStyle: {},
         }}
         initialRouteName="Home">
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Start" component={Start} />
+        <Drawer.Screen name={APP_ROUTES.Home} component={Home} />
+        <Drawer.Screen name={APP_ROUTES.Start} component={Start} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

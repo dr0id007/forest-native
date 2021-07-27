@@ -22,7 +22,7 @@ export const UrgeWithPleasureComponent = ({
 }: Props) => (
   <CountdownCircleTimer size={size} isPlaying duration={value} colors={colors}>
     {({remainingTime, animatedColor}) => (
-      <Animated.Text style={{color: animatedColor, fontSize: fontSize}}>
+      <Animated.Text style={{color: 'white', fontSize: fontSize}}>
         {/* {Math.floor(remainingTime / 60)} */}
         {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toFixed(0)}
       </Animated.Text>

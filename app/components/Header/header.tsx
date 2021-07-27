@@ -19,8 +19,8 @@ export const Header = (props: Props) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.menuIcon} onPress={toggleDrawer}>
-        <Icon style={styles.menuIcon} name="menu" />
+      <TouchableOpacity style={styles.menuButton} onPress={toggleDrawer}>
+        <Icon style={styles.menuIcon} name="menu" color={'white'} />
       </TouchableOpacity>
     </View>
   );
@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  menuIcon: {
-    padding: 10,
+  menuButton: {
+    padding: 20,
   },
+  menuIcon: {},
 });
