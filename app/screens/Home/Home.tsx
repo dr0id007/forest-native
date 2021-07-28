@@ -55,9 +55,9 @@ export const Home = (props: Props) => {
 
   const onOpenModal = () => {
     console.log('open modal called.');
-    showNotification();
+    // showNotification();
     // runBackgroundTimer();
-    // modalizeRef.current?.open();
+    modalizeRef.current?.open();
   };
 
   const onSetTimer = () => {

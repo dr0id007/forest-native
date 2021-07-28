@@ -13,16 +13,22 @@ interface Props {
   onClick?: ((event: GestureResponderEvent) => void) | undefined;
   icon?: string;
   type?: string;
+  color?: string;
 }
 
-export const Btn = ({text, icon, type = 'font-awesome-5', onClick}: Props) => {
+export const IconBtn = ({
+  text,
+  icon,
+  type = 'font-awesome-5',
+  color = 'black',
+  onClick,
+}: Props) => {
   return (
     <TouchableOpacity
       style={styles.button}
       onPress={onClick}
       activeOpacity={0.7}>
-      <Text style={styles.text}>{text}</Text>
-      {icon ? <Icon name={icon} type={type} /> : null}
+      {icon ? <Icon color={color} name={icon} type={type} /> : null}
     </TouchableOpacity>
   );
 };
@@ -30,14 +36,13 @@ export const Btn = ({text, icon, type = 'font-awesome-5', onClick}: Props) => {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#67D1AD',
-    margin: 10,
-    padding: 10,
-    paddingHorizontal: 25,
-    borderRadius: 8,
-    // elevation: 2,
-    borderBottomColor: '#278064',
-    borderBottomWidth: 4,
+    // backgroundColor: '#67D1AD',
+    // margin: 10,
+    // padding: 10,
+    // paddingHorizontal: 25,
+    // borderRadius: 8,
+    // borderBottomColor: '#278064',
+    // borderBottomWidth: 4,
   },
   text: {
     color: 'white',

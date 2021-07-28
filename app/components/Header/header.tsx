@@ -1,15 +1,23 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-// import {
-//   DrawerNavigationProp,
-//   createDrawerNavigator,
-// } from '@react-navigation/drawer';
 
-interface Props {}
+interface Props {
+  icon?: string;
+  iconType?: string;
+  title?: string;
+  color?: string;
+  onIconPress?: Function;
+}
 
-export const Header = (props: Props) => {
+export const Header = ({
+  icon = 'menu',
+  iconType = 'material',
+  title,
+  color = 'white',
+  onIconPress,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
 
@@ -19,9 +27,19 @@ export const Header = (props: Props) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.menuButton} onPress={toggleDrawer}>
-        <Icon style={styles.menuIcon} name="menu" color={'white'} />
+      <TouchableOpacity
+        style={styles.menuButton}
+        onPress={() => (onIconPress ? onIconPress() : toggleDrawer())}>
+        <Icon
+          style={styles.menuIcon}
+          name={icon}
+          type={iconType}
+          color={color}
+        />
       </TouchableOpacity>
+      <View style={styles.center}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
     </View>
   );
 };
@@ -30,10 +48,23 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   menuButton: {
     padding: 20,
   },
   menuIcon: {},
+  title: {
+    fontSize: 20,
+    color: 'white',
+    paddingRight: 50,
+    textAlign: 'center',
+    textTransform: 'capitalize',
+  },
+  center: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 });

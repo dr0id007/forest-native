@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Modalize} from 'react-native-modalize';
+import {Tag, Btn, IconBtn} from '../../components';
+import {Tags} from '../../constants/tags';
 
 interface Props {
   modalizeRef: React.RefObject<Modalize>;
@@ -8,26 +10,78 @@ interface Props {
 }
 
 export const ModalComponent = ({modalizeRef, data}: Props) => {
-  const renderItem = (item: any) => (
-    <View>
-      <Text>{item.heading}</Text>
-    </View>
-  );
+  const renderMinutesList = () => {
+    let arr = [];
+
+    for (let i = 5; i <= 120; i = i + 5) {
+      arr.push(<Tag key={i} text={i} />);
+    }
+    return arr;
+  };
 
   return (
     <>
       <Modalize
         ref={modalizeRef}
-        flatListProps={{
-          data: data,
-          renderItem: renderItem,
-          keyExtractor: item => item.heading,
-          showsVerticalScrollIndicator: false,
-        }}
-        modalStyle={{height: 100}}
-        childrenStyle={{height: 100}}
-        adjustToContentHeight={true}
-      />
+        // modalStyle={{height: 100}}
+        // childrenStyle={{height: 400}}
+        adjustToContentHeight={true}>
+        <View style={styles.container}>
+          <Text style={styles.text}>Tags:</Text>
+          <View style={styles.row}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              {Tags.map((data, index) => {
+                return <Tag text={data.name} key={index} />;
+              })}
+            </ScrollView>
+          </View>
+          <Text style={styles.text}>Focused Time:</Text>
+          <View style={styles.row}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              {renderMinutesList()}
+            </ScrollView>
+          </View>
+
+          <View style={styles.bottomContainer}>
+            <View style={styles.row}>
+              <IconBtn
+                type={'material'}
+                icon={'favorite-border'}
+                color={'grey'}
+              />
+              <Btn text={'Plant'} />
+            </View>
+          </View>
+        </View>
+      </Modalize>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    backgroundColor: 'red',
+  },
+  bottomContainer: {
+    // position: 'relative',
+    // bottom: 0,
+    backgroundColor: 'white',
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 5,
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
