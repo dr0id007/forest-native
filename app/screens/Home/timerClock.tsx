@@ -9,6 +9,7 @@ interface Props {
   onClick?: Function;
   setTime?: Function;
   onTimerPress?: Function;
+  onRenderText?: Function;
 }
 
 export const TimerClock = ({
@@ -16,6 +17,7 @@ export const TimerClock = ({
   timer,
   setTime,
   onTimerPress,
+  onRenderText = () => {},
 }: Props) => {
   if (isRunning)
     return (
@@ -25,6 +27,7 @@ export const TimerClock = ({
             size={300}
             value={timer * 60}
             fontSize={35}
+            onRenderText={onRenderText}
           />
         </View>
       </View>

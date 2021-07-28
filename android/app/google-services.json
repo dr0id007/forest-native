@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966120696519",
+    "project_id": "anime-forest-defb9",
+    "storage_bucket": "anime-forest-defb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966120696519:android:7fffecb0e39570c1e4ece2",
+        "android_client_info": {
+          "package_name": "com.animeforest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966120696519-ge39ictvaf6l4d3ievnanv7dfasbho7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrGw9aiG33p-OUhhXCiTO3zPchoKe16e8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966120696519-ge39ictvaf6l4d3ievnanv7dfasbho7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

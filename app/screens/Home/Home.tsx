@@ -1,15 +1,17 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   Text,
   View,
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
+  BackHandler,
+  Alert,
 } from 'react-native';
-import {Btn, Header, ModalComponent} from '../../components';
+import {Btn, Header, ModalComponent, LocalNotification} from '../../components';
 import {TimerClock} from './timerClock';
 import {animeQuotes} from '../../constants/animeQuotes';
 import {Modalize} from 'react-native-modalize';
+import {runBackgroundTimer, stopBackgroundTimer} from './backgroundTimer';
 
 interface Props {}
 
@@ -18,9 +20,44 @@ export const Home = (props: Props) => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const modalizeRef = useRef<Modalize>(null);
 
+  // will add later
+
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', () => {
+  //     // Alert.alert('test');
+  //     return true;
+  //   });
+  //   return () =>
+  //     BackHandler.removeEventListener('hardwareBackPress', () => true);
+  // }, []);
+
+  const showNotification = (time?: string) => {
+    LocalNotification({
+      // ongoing: true,
+      id: 1,
+      channelId: '1',
+      message: `Time Remaining:  ${time}`,
+    });
+  };
+
+  const showNotificationInBackground = (time?: string) => {
+    runBackgroundTimer({
+      run: () =>
+        LocalNotification({
+          // ongoing: true,
+          id: 1,
+          channelId: '1',
+          message: `Time Remaining:  ${time}`,
+        }),
+      totalTime: time ? parseInt(time) : undefined,
+    });
+  };
+
   const onOpenModal = () => {
     console.log('open modal called.');
-    modalizeRef.current?.open();
+    showNotification();
+    // runBackgroundTimer();
+    // modalizeRef.current?.open();
   };
 
   const onSetTimer = () => {
@@ -51,6 +88,7 @@ export const Home = (props: Props) => {
           timer={timer}
           setTime={setTimer}
           onTimerPress={onOpenModal}
+          onRenderText={showNotificationInBackground}
         />
         <View style={styles.buttonContainer}>
           {isRunning ? (

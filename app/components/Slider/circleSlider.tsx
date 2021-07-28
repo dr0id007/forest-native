@@ -176,7 +176,7 @@ const CircleSlider: FC<Props> = ({
             stroke={strokeColor}
             strokeWidth={strokeWidth}
             fill={fillColor}
-            {...panResponder.panHandlers}
+            // {...panResponder.panHandlers}
           />
 
           <Path
@@ -193,7 +193,7 @@ const CircleSlider: FC<Props> = ({
               cx={bR}
               cy={bR}
               fill={meterColor}
-              // {...panResponder.panHandlers}
+              {...panResponder.panHandlers}
             />
             <Text
               x={bR}
