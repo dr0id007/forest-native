@@ -19,9 +19,9 @@ export const Tag = ({
   <Chip
     style={{marginHorizontal: 5, borderRadius: 10}}
     icon={icon}
-    selectedColor={selectedColor}
+    // selectedColor={selectedColor}
     selected={selected}
-    onPress={() => onPress()}>
+    onPress={() => onPress(text)}>
     {text}
   </Chip>
 );

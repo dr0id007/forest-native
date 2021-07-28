@@ -7,14 +7,33 @@ import {Tags} from '../../constants/tags';
 interface Props {
   modalizeRef: React.RefObject<Modalize>;
   data?: any;
+  selectedTime?: number;
+  onSelectTime?: Function;
+  selectedTag?: string;
+  onSelectTag?: Function;
 }
 
-export const ModalComponent = ({modalizeRef, data}: Props) => {
-  const renderMinutesList = () => {
+export const ModalComponent = ({
+  modalizeRef,
+  data,
+  selectedTime = 10,
+  onSelectTime = () => {},
+  selectedTag = 'Study',
+  onSelectTag = () => {},
+}: Props) => {
+  const renderMinutesList = (selectedTime: number) => {
     let arr = [];
 
     for (let i = 5; i <= 120; i = i + 5) {
-      arr.push(<Tag key={i} text={i} />);
+      arr.push(
+        <Tag
+          key={i}
+          text={i}
+          selected={selectedTime === i ? true : false}
+          selectedColor={'red'}
+          onPress={onSelectTime}
+        />,
+      );
     }
     return arr;
   };
@@ -33,7 +52,15 @@ export const ModalComponent = ({modalizeRef, data}: Props) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               {Tags.map((data, index) => {
-                return <Tag text={data.name} key={index} />;
+                return (
+                  <Tag
+                    text={data.name}
+                    key={index}
+                    selected={selectedTag === data.name ? true : false}
+                    selectedColor={'red'}
+                    onPress={onSelectTag}
+                  />
+                );
               })}
             </ScrollView>
           </View>
@@ -42,7 +69,7 @@ export const ModalComponent = ({modalizeRef, data}: Props) => {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              {renderMinutesList()}
+              {renderMinutesList(selectedTime)}
             </ScrollView>
           </View>
 

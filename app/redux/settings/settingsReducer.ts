@@ -1,18 +1,23 @@
-import {Types, ITags} from './types';
+import {Types, ISettings} from './types';
 import {Tags} from '../../constants/tags';
 
-const initialState = {currentTag: Tags[0]};
-
 interface Action {
-  payload: ITags;
+  payload: ISettings;
   type: string;
 }
 
+const initialState = {notifications: false, sound: false};
+
 const reducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case Types.CHANGE_TAGS: {
-      const {payload} = action;
-      return {...state, theme: payload};
+    case Types.TOGGLE_NOTIFICATION: {
+      const {notifications} = action.payload;
+      return {...state, notifications};
+    }
+
+    case Types.TOGGLE_SOUND: {
+      const {sound} = action.payload;
+      return {...state, sound};
     }
 
     default:

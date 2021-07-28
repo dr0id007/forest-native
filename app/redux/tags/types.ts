@@ -3,6 +3,6 @@ export const Types = {
 };
 
 export interface ITags {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }

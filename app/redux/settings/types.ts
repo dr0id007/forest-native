@@ -1,8 +1,9 @@
 export const Types = {
-  CHANGE_TAGS: 'CHANGE_TAGS',
+  TOGGLE_NOTIFICATION: 'TOGGLE_NOTIFICATION',
+  TOGGLE_SOUND: 'TOGGLE_SOUND',
 };
 
-export interface ITags {
-  id: number;
-  name: string;
+export interface ISettings {
+  notifications?: boolean;
+  sound?: boolean;
 }

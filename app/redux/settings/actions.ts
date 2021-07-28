@@ -1,7 +1,11 @@
-import {Types} from './types';
-import {Themes} from '../../constants/theme';
+import {Types, ISettings} from './types';
 import {Dispatch} from 'redux';
 
-export const changeTags = (payload: number) => (dispatch: Dispatch) => {
-  dispatch({type: Types.CHANGE_TAGS, payload: Themes[payload]});
+export const toggleNotification =
+  (payload: ISettings) => (dispatch: Dispatch) => {
+    dispatch({type: Types.TOGGLE_NOTIFICATION, payload});
+  };
+
+export const toggleSound = (payload: ISettings) => (dispatch: Dispatch) => {
+  dispatch({type: Types.TOGGLE_SOUND, payload});
 };

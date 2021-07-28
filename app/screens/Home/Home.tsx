@@ -7,18 +7,27 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
-import {Btn, Header, ModalComponent, LocalNotification} from '../../components';
+import {Btn, Header, ModalWrapper, LocalNotification} from '../../components';
 import {TimerClock} from './timerClock';
 import {animeQuotes} from '../../constants/animeQuotes';
 import {Modalize} from 'react-native-modalize';
 import {runBackgroundTimer, stopBackgroundTimer} from './backgroundTimer';
+import {useSelector, useDispatch} from 'react-redux';
+import {setTimer} from '../../redux/timer/actions';
 
 interface Props {}
 
 export const Home = (props: Props) => {
-  const [timer, setTimer] = useState<number>(0);
+  // const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const modalizeRef = useRef<Modalize>(null);
+  const timerState = useSelector(state => state.timer);
+  const dispatch = useDispatch();
+
+  const setTime = (time: number) => {
+    console.log('set timer called..', time);
+    dispatch(setTimer({time}));
+  };
 
   // will add later
 
@@ -66,10 +75,12 @@ export const Home = (props: Props) => {
   };
   const onReset = () => {
     setIsRunning(false);
+    stopBackgroundTimer();
   };
 
   const onFinish = () => {
     setIsRunning(false);
+    stopBackgroundTimer();
   };
 
   const onPause = () => {
@@ -79,14 +90,14 @@ export const Home = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <ModalComponent modalizeRef={modalizeRef} />
+      <ModalWrapper modalizeRef={modalizeRef} />
       <View style={styles.mainContainer}>
         <Text style={styles.heading}>{animeQuotes[1].text}</Text>
         <Text style={styles.subHeading}>{animeQuotes[1].anime}</Text>
         <TimerClock
           isRunning={isRunning}
-          timer={timer}
-          setTime={setTimer}
+          timer={timerState.time}
+          setTime={setTime}
           onTimerPress={onOpenModal}
           onRenderText={showNotificationInBackground}
         />
