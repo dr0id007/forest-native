@@ -9,10 +9,10 @@ export const setTimer = (payload: ITimer) => (dispatch: Dispatch) => {
   dispatch({type: Types.SET_TIMER, payload});
 };
 
-export const startTimer = (payload: ITimer) => (dispatch: Dispatch) => {
-  dispatch({type: Types.START_TIMER, payload});
+export const startTimer = () => (dispatch: Dispatch) => {
+  dispatch({type: Types.START_TIMER});
 };
 
-export const stopTimer = (payload: ITimer) => (dispatch: Dispatch) => {
-  dispatch({type: Types.STOP_TIMER, payload});
+export const stopTimer = () => (dispatch: Dispatch) => {
+  dispatch({type: Types.STOP_TIMER});
 };

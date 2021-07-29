@@ -20,13 +20,16 @@ import {animeQuotes} from '../../constants/animeQuotes';
 import {Modalize} from 'react-native-modalize';
 import {runBackgroundTimer, stopBackgroundTimer} from './backgroundTimer';
 import {useSelector, useDispatch} from 'react-redux';
-import {setTimer, setAngle} from '../../redux/timer/actions';
+import {
+  setTimer,
+  setAngle,
+  startTimer,
+  stopTimer,
+} from '../../redux/timer/actions';
 
 interface Props {}
 
 export const Home = (props: Props) => {
-  // isrunning in context
-  const [isRunning, setIsRunning] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(true);
   const modalizeRef = useRef<Modalize>(null);
   const timerState = useSelector(state => state.timer);
@@ -74,7 +77,7 @@ export const Home = (props: Props) => {
   };
 
   const onSetTimer = () => {
-    setIsRunning(true);
+    dispatch(startTimer());
   };
 
   const onSetAngle = (angle: number) => {
@@ -82,12 +85,12 @@ export const Home = (props: Props) => {
   };
 
   const onReset = () => {
-    setIsRunning(false);
+    dispatch(stopTimer());
     stopBackgroundTimer();
   };
 
-  const onFinish = () => {
-    setIsRunning(false);
+  const onGiveUp = () => {
+    dispatch(stopTimer());
     stopBackgroundTimer();
   };
 
@@ -102,8 +105,8 @@ export const Home = (props: Props) => {
   };
 
   const onConfettiComplete = () => {
+    dispatch(stopTimer());
     setShowConfetti(false);
-    setIsRunning(false);
   };
 
   return (
@@ -115,7 +118,7 @@ export const Home = (props: Props) => {
         <Text style={styles.heading}>{animeQuotes[1].text}</Text>
         <Text style={styles.subHeading}>{animeQuotes[1].anime}</Text>
         <TimerClock
-          isRunning={isRunning}
+          isRunning={timerState.isRunning}
           timer={timerState.time}
           setTime={setTime}
           onTimerPress={onOpenModal}
@@ -125,10 +128,10 @@ export const Home = (props: Props) => {
           onComplete={onComplete}
         />
         <View style={styles.buttonContainer}>
-          {isRunning ? (
+          {timerState.isRunning ? (
             <>
               <Btn text={'Pause'} onClick={onPause} />
-              <Btn text={'Finish'} onClick={onFinish} />
+              <Btn text={'Give Up'} onClick={onGiveUp} />
             </>
           ) : (
             <>

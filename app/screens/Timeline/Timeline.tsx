@@ -36,8 +36,8 @@ const data = [
       'Team sport played between two teams of eleven players with a spherical ball. ',
     lineColor: '#009688',
     // icon: require('../img/soccer.png'),
-    // imageUrl:
-    //   'https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg',
+    imageUrl:
+      'https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg',
   },
   {
     time: '16:30',
@@ -94,9 +94,14 @@ export const TimelineView = (props: Props) => {
         <Timeline
           style={styles.list}
           data={data}
-          // innerCircle={'dot'}
+          // separator
+          showTime={true}
+          lineColor={'#007AFF'}
+          circleColor={'#007AFF'}
           innerCircle={'icon'}
           renderDetail={renderDetail}
+          onEventPress={() => {}}
+          timeContainerStyle={{minWidth: 72}}
         />
       </View>
     </View>
