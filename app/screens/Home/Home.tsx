@@ -13,6 +13,7 @@ import {
   ModalWrapper,
   LocalNotification,
   Tag,
+  Confetti,
 } from '../../components';
 import {TimerClock} from './timerClock';
 import {animeQuotes} from '../../constants/animeQuotes';
@@ -24,7 +25,9 @@ import {setTimer, setAngle} from '../../redux/timer/actions';
 interface Props {}
 
 export const Home = (props: Props) => {
+  // isrunning in context
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [showConfetti, setShowConfetti] = useState<boolean>(true);
   const modalizeRef = useRef<Modalize>(null);
   const timerState = useSelector(state => state.timer);
   const dispatch = useDispatch();
@@ -92,9 +95,21 @@ export const Home = (props: Props) => {
     console.log('pause the clock.');
   };
 
+  const onComplete = () => {
+    console.log('onComplete called...');
+    setShowConfetti(true);
+    stopBackgroundTimer();
+  };
+
+  const onConfettiComplete = () => {
+    setShowConfetti(false);
+    setIsRunning(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
+      {showConfetti ? <Confetti onComplete={onConfettiComplete} /> : null}
       <ModalWrapper modalizeRef={modalizeRef} />
       <View style={styles.mainContainer}>
         <Text style={styles.heading}>{animeQuotes[1].text}</Text>
@@ -107,6 +122,7 @@ export const Home = (props: Props) => {
           onRenderText={showNotificationInBackground}
           angle={timerState.angle}
           setAngle={onSetAngle}
+          onComplete={onComplete}
         />
         <View style={styles.buttonContainer}>
           {isRunning ? (

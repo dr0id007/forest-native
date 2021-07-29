@@ -13,6 +13,7 @@ interface Props {
   colors?: string | Colors;
   fontSize?: number;
   onRenderText?: Function;
+  onComplete?: Function;
 }
 
 export const UrgeWithPleasureComponent = ({
@@ -21,6 +22,7 @@ export const UrgeWithPleasureComponent = ({
   colors = [['#0cd', 1]],
   fontSize = 22,
   onRenderText = () => {},
+  onComplete = () => {},
 }: Props) => {
   const renderTime = (remainingTime: number) => {
     let time = `${Math.floor(remainingTime / 60)}:${(
@@ -44,7 +46,8 @@ export const UrgeWithPleasureComponent = ({
       size={size}
       isPlaying
       duration={value}
-      colors={colors}>
+      colors={colors}
+      onComplete={() => onComplete()}>
       {({remainingTime, animatedColor}) => renderTime(remainingTime)}
     </CountdownCircleTimer>
   );

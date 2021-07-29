@@ -12,6 +12,7 @@ interface Props {
   onRenderText?: Function;
   angle?: number;
   setAngle?: Function;
+  onComplete?: Function;
 }
 
 export const TimerClock = ({
@@ -22,6 +23,7 @@ export const TimerClock = ({
   onRenderText = () => {},
   angle = 0,
   setAngle = () => {},
+  onComplete = () => {},
 }: Props) => {
   if (isRunning)
     return (
@@ -32,6 +34,7 @@ export const TimerClock = ({
             value={timer * 60}
             fontSize={35}
             onRenderText={onRenderText}
+            onComplete={onComplete}
           />
         </View>
       </View>

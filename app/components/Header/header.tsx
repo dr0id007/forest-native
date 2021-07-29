@@ -38,7 +38,7 @@ export const Header = ({
         />
       </TouchableOpacity>
       <View style={styles.center}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, {color: color}]}>{title}</Text>
       </View>
     </View>
   );
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   menuIcon: {},
   title: {
     fontSize: 20,
-    color: 'white',
     paddingRight: 50,
     textAlign: 'center',
     textTransform: 'capitalize',

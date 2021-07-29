@@ -33,5 +33,8 @@ export const runBackgroundTimer = ({run = () => {}, totalTime = 10}: Props) => {
 };
 
 export const stopBackgroundTimer = () => {
+  // clear previous notification
+  removeAllDeliveredNotifications();
+
   BackgroundTimer.stopBackgroundTimer();
 };

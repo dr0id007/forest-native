@@ -7,8 +7,8 @@ interface Action {
 
 const initialState: ITimer = {
   isRunning: false,
-  time: 10,
-  angle: 30,
+  time: 1,
+  angle: 10,
 };
 
 const reducer = (state = initialState, action: Action) => {
