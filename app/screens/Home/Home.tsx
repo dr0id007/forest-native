@@ -7,27 +7,27 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
-import {Btn, Header, ModalWrapper, LocalNotification} from '../../components';
+import {
+  Btn,
+  Header,
+  ModalWrapper,
+  LocalNotification,
+  Tag,
+} from '../../components';
 import {TimerClock} from './timerClock';
 import {animeQuotes} from '../../constants/animeQuotes';
 import {Modalize} from 'react-native-modalize';
 import {runBackgroundTimer, stopBackgroundTimer} from './backgroundTimer';
 import {useSelector, useDispatch} from 'react-redux';
-import {setTimer} from '../../redux/timer/actions';
+import {setTimer, setAngle} from '../../redux/timer/actions';
 
 interface Props {}
 
 export const Home = (props: Props) => {
-  // const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const modalizeRef = useRef<Modalize>(null);
   const timerState = useSelector(state => state.timer);
   const dispatch = useDispatch();
-
-  const setTime = (time: number) => {
-    console.log('set timer called..', time);
-    dispatch(setTimer({time}));
-  };
 
   // will add later
 
@@ -62,17 +62,22 @@ export const Home = (props: Props) => {
     });
   };
 
+  const setTime = (time: number) => {
+    dispatch(setTimer({time}));
+  };
+
   const onOpenModal = () => {
-    console.log('open modal called.');
-    // showNotification();
-    // runBackgroundTimer();
     modalizeRef.current?.open();
   };
 
   const onSetTimer = () => {
-    console.log('set timer called..');
     setIsRunning(true);
   };
+
+  const onSetAngle = (angle: number) => {
+    dispatch(setAngle({angle}));
+  };
+
   const onReset = () => {
     setIsRunning(false);
     stopBackgroundTimer();
@@ -100,6 +105,8 @@ export const Home = (props: Props) => {
           setTime={setTime}
           onTimerPress={onOpenModal}
           onRenderText={showNotificationInBackground}
+          angle={timerState.angle}
+          setAngle={onSetAngle}
         />
         <View style={styles.buttonContainer}>
           {isRunning ? (
@@ -114,6 +121,8 @@ export const Home = (props: Props) => {
             </>
           )}
         </View>
+
+        {/* <Tag text={'sdf'} /> */}
       </View>
     </SafeAreaView>
   );

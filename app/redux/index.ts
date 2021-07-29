@@ -9,4 +9,5 @@ export default combineReducers({
   tags: tagsReducer,
   settings: settingsReducer,
   timer: timerReducer,
+  // timeline: timerReducer,
 });

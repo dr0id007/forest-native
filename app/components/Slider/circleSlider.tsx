@@ -23,11 +23,12 @@ interface Props {
   max?: number;
   xCenter?: number;
   yCenter?: number;
-  innerText?: string;
   initialTime?: number;
   time?: number;
   setTime?: Function;
   onTextPress?: Function;
+  angle?: number;
+  setAngle?: Function;
 }
 
 const CircleSlider: FC<Props> = ({
@@ -46,12 +47,13 @@ const CircleSlider: FC<Props> = ({
   max = 359,
   xCenter = Dimensions.get('window').width / 2,
   yCenter = Dimensions.get('window').height / 2,
-  // innerText = 'hey',
   time = 10,
   setTime = () => {},
   onTextPress = () => {},
+  angle = 0,
+  setAngle = () => {},
 }) => {
-  const [angle, setAngle] = useState(value);
+  // const [angle, setAngle] = useState(value);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -112,25 +114,9 @@ const CircleSlider: FC<Props> = ({
   );
 
   const angleToTime = (angle: number) => {
-    //   need to add more realistic time.
-    if (angle >= 0 && angle <= 15) return 10;
-    if (angle >= 15 && angle <= 30) return 15;
-    if (angle > 30 && angle <= 45) return 20;
-    if (angle > 45 && angle <= 60) return 25;
-    if (angle > 60 && angle <= 75) return 30;
-    if (angle > 75 && angle <= 90) return 35;
-    if (angle > 90 && angle <= 105) return 40;
-    if (angle > 105 && angle <= 120) return 45;
-    if (angle > 120 && angle <= 135) return 50;
-    if (angle > 135 && angle <= 150) return 55;
-    if (angle > 150 && angle <= 180) return 60;
-    // half rotation
-    if (angle > 180 && angle <= 210) return 70;
-    if (angle > 210 && angle <= 240) return 80;
-    if (angle > 240 && angle <= 270) return 90;
-    if (angle > 270 && angle <= 300) return 100;
-    if (angle > 300 && angle <= 330) return 110;
-    if (angle > 330 && angle <= 360) return 120;
+    if (angle === 0) return 5;
+    if (angle === 360) return 120;
+    return Math.floor(angle / 15) * 5 + 5;
   };
 
   const width = (dialRadius + btnRadius) * 2;
@@ -176,7 +162,6 @@ const CircleSlider: FC<Props> = ({
             stroke={strokeColor}
             strokeWidth={strokeWidth}
             fill={fillColor}
-            // {...panResponder.panHandlers}
           />
 
           <Path

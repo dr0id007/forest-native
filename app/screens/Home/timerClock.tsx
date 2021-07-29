@@ -10,6 +10,8 @@ interface Props {
   setTime?: Function;
   onTimerPress?: Function;
   onRenderText?: Function;
+  angle?: number;
+  setAngle?: Function;
 }
 
 export const TimerClock = ({
@@ -18,6 +20,8 @@ export const TimerClock = ({
   setTime,
   onTimerPress,
   onRenderText = () => {},
+  angle = 0,
+  setAngle = () => {},
 }: Props) => {
   if (isRunning)
     return (
@@ -41,6 +45,8 @@ export const TimerClock = ({
       strokeWidth={10}
       dialWidth={10}
       onTextPress={onTimerPress}
+      angle={angle}
+      setAngle={setAngle}
     />
   );
 };

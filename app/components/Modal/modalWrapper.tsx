@@ -2,8 +2,9 @@ import React from 'react';
 import {ModalComponent} from '../../components';
 import {Modalize} from 'react-native-modalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {setTimer} from '../../redux/timer/actions';
+import {setTimer, setAngle} from '../../redux/timer/actions';
 import {changeTags} from '../../redux/tags/actions';
+import {timeToAngle} from '../../utils/timer';
 
 interface Props {
   modalizeRef: React.RefObject<Modalize>;
@@ -19,6 +20,7 @@ export const ModalWrapper = ({modalizeRef, data}: Props) => {
 
   const onSelectTime = (time: number) => {
     dispatch(setTimer({time}));
+    dispatch(setAngle({angle: timeToAngle(time)}));
   };
   const onSelectTag = (tag: string) => {
     dispatch(changeTags({name: tag}));

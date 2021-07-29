@@ -10,4 +10,5 @@ export * from './Tags/chip';
 export * from './Loader/loader';
 export * from './Card/cardWrapper';
 export * from './Card/listItem';
+export * from './Card/timelineCard';
 export * from './Divider/divider';

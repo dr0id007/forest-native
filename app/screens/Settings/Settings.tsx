@@ -13,7 +13,7 @@ export const Settings = (props: Props) => {
   const dispatch = useDispatch();
 
   const onPress = () => {
-    navigation.goBack();
+    navigation.navigate('Home');
   };
   const dispatchNotification = () => {
     dispatch(toggleNotification({notifications: !settingsState.notifications}));

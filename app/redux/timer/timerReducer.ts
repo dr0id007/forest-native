@@ -8,10 +8,16 @@ interface Action {
 const initialState: ITimer = {
   isRunning: false,
   time: 10,
+  angle: 30,
 };
 
 const reducer = (state = initialState, action: Action) => {
   switch (action.type) {
+    case Types.SET_ANGLE: {
+      const {angle} = action.payload;
+      return {...state, angle};
+    }
+
     case Types.SET_TIMER: {
       const {time} = action.payload;
       return {...state, time};
