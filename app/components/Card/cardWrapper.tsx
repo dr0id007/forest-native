@@ -9,6 +9,8 @@ interface Props {
   icon?: string;
   iconType?: string;
   children?: ReactElement;
+  color?: string;
+  backgroundColor?: string;
 }
 
 export const CardWrapper = ({
@@ -16,12 +18,22 @@ export const CardWrapper = ({
   title,
   icon,
   iconType = 'material',
+  color = '#333333',
+  backgroundColor = '#F4F4F4',
 }: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor}]}>
       <View style={styles.row}>
-        {icon ? <Icon name={icon} type={iconType} size={24} /> : null}
-        <Text style={styles.title}>{title}</Text>
+        {icon ? (
+          <Icon
+            style={{paddingHorizontal: 10}}
+            name={icon}
+            type={iconType}
+            size={24}
+            color={color}
+          />
+        ) : null}
+        <Text style={[styles.title, {color}]}>{title}</Text>
       </View>
       <Hr />
       <View style={styles.children}>{children}</View>
@@ -31,9 +43,9 @@ export const CardWrapper = ({
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
-    borderRadius: 5,
-    backgroundColor: '#F4F4F4',
+    margin: 10,
+    marginVertical: 5,
+    borderRadius: 10,
     padding: 10,
   },
   row: {

@@ -18,7 +18,7 @@ export const Tag = ({
 }: Props) => (
   <Chip
     style={{marginHorizontal: 5, borderRadius: 10}}
-    icon={icon}
+    // icon={icon}
     // selectedColor={selectedColor}
     selected={selected}
     onPress={() => onPress(text)}>

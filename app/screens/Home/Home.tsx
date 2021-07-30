@@ -5,7 +5,9 @@ import {
   SafeAreaView,
   StyleSheet,
   BackHandler,
-  Alert,
+  ToastAndroid,
+  ImageBackground,
+  Dimensions,
 } from 'react-native';
 import {
   Btn,
@@ -29,22 +31,30 @@ import {
 
 interface Props {}
 
+const {width, height} = Dimensions.get('window');
+
 export const Home = (props: Props) => {
-  const [showConfetti, setShowConfetti] = useState<boolean>(true);
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const modalizeRef = useRef<Modalize>(null);
   const timerState = useSelector(state => state.timer);
   const dispatch = useDispatch();
 
   // will add later
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener('hardwareBackPress', () => {
-  //     // Alert.alert('test');
-  //     return true;
-  //   });
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', () => true);
-  // }, []);
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      ToastAndroid.showWithGravityAndOffset(
+        'A wild toast appeared!',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      return true;
+    });
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true);
+  }, []);
 
   const showNotification = (time?: string) => {
     LocalNotification({
@@ -111,7 +121,14 @@ export const Home = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      {/* <ImageBackground
+        // 6
+        // 7
+        // 8
+        source={require('../../assets/images/bg/11.png')}
+        resizeMode="cover"
+        style={styles.image}> */}
+      <Header rightIcon={'coin'} rightText={'3/10'} />
       {showConfetti ? <Confetti onComplete={onConfettiComplete} /> : null}
       <ModalWrapper modalizeRef={modalizeRef} />
       <View style={styles.mainContainer}>
@@ -143,6 +160,7 @@ export const Home = (props: Props) => {
 
         {/* <Tag text={'sdf'} /> */}
       </View>
+      {/* </ImageBackground> */}
     </SafeAreaView>
   );
 };
@@ -151,6 +169,10 @@ const styles = StyleSheet.create({
   container: {backgroundColor: '#50A387', flex: 1},
   mainContainer: {
     marginTop: 50,
+  },
+  image: {
+    width,
+    height,
   },
   heading: {
     textAlign: 'left',

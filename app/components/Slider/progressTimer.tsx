@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
-import {Animated, StyleSheet} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
+import {Text} from 'react-native-elements';
+import {Tag} from '../../components';
 
 type Color = [string, number];
 type Colors = {
@@ -36,11 +38,21 @@ export const UrgeWithPleasureComponent = ({
       return () => {};
     }, []);
     return (
+      // <View>
+
+      //   {/* <Tag text={'tets'} /> */}
+      // </View>
+
       <Animated.Text style={{color: 'white', fontSize: fontSize}}>
         {time}
       </Animated.Text>
     );
   };
+
+  const RenderTag = () => {
+    return <Text>testing tags</Text>;
+  };
+
   return (
     <CountdownCircleTimer
       size={size}

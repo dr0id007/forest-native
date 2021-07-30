@@ -9,6 +9,9 @@ interface Props {
   title?: string;
   color?: string;
   onIconPress?: Function;
+  rightIcon?: string;
+  rightText?: string;
+  backgroundColor?: string;
 }
 
 export const Header = ({
@@ -17,6 +20,9 @@ export const Header = ({
   title,
   color = 'white',
   onIconPress,
+  rightIcon,
+  rightText,
+  backgroundColor = '#50A387',
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
@@ -26,7 +32,7 @@ export const Header = ({
     navigation.toggleDrawer();
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: backgroundColor}]}>
       <TouchableOpacity
         style={styles.menuButton}
         onPress={() => (onIconPress ? onIconPress() : toggleDrawer())}>
@@ -40,6 +46,11 @@ export const Header = ({
       <View style={styles.center}>
         <Text style={[styles.title, {color: color}]}>{title}</Text>
       </View>
+      {rightText ? (
+        <View style={styles.right}>
+          <Text style={[styles.rightText, {color: color}]}>{rightText}</Text>
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -65,5 +76,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+  },
+  right: {
+    padding: 20,
+  },
+  rightText: {
+    textAlign: 'right',
+    fontSize: 20,
   },
 });

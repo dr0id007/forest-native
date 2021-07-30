@@ -13,3 +13,4 @@ export * from './Card/listItem';
 export * from './Card/timelineCard';
 export * from './Divider/divider';
 export * from './Gif/confetti';
+export * from './Footer/footer';

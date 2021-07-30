@@ -1,5 +1,4 @@
 import {Types, ISettings} from './types';
-import {Tags} from '../../constants/tags';
 
 interface Action {
   payload: ISettings;
@@ -18,6 +17,16 @@ const reducer = (state = initialState, action: Action) => {
     case Types.TOGGLE_SOUND: {
       const {sound} = action.payload;
       return {...state, sound};
+    }
+
+    case Types.TOGGLE_WIFI_ONLY: {
+      const {wifiOnly} = action.payload;
+      return {...state, wifiOnly};
+    }
+
+    case Types.TOGGLE_SEND_USAGE: {
+      const {sendUsage} = action.payload;
+      return {...state, sendUsage};
     }
 
     default:

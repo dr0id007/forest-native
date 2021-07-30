@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     padding: 10,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   bottomContainer: {
     // position: 'relative',
