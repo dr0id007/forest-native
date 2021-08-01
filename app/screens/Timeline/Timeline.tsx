@@ -4,28 +4,62 @@ import {Header} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import Timeline from 'react-native-timeline-flatlist';
 import {data} from '../../mockdata/timeline';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchHistory, deleteSession} from '../../redux/session/actions';
+import {SessionType} from '../../redux/session/types';
 
 interface Props {}
 
 export const TimelineView = (props: Props) => {
   const [timeline, setTimeline] = useState([]);
   const navigation = useNavigation();
+  const sessionState = useSelector(state => state.session);
+  const dispatch = useDispatch();
 
+  console.log('zxcxzc', sessionState);
   // fetch previous sessions:
-  useEffect(() => {});
+  useEffect(() => {
+    dispatch(fetchHistory());
+  }, []);
 
   const onPress = () => {
     navigation.navigate('Home');
   };
 
+  function formatSessionData<Type>(sessions: Type[]): Type {
+    const formatData = sessions.map((session: SessionType, index: number) => {
+      return {
+        ...session,
+        time: '11:00 am',
+      };
+    });
+    setTimeline(formatData);
+  }
+
+  useEffect(() => {
+    if (sessionState.sessions) formatSessionData(sessionState.sessions);
+  }, [sessionState.sessions]);
+
   const renderDetail = (rowData, sectionID, rowID) => {
-    let title = <Text style={[styles.title]}>{rowData.title}</Text>;
+    let title = (
+      <Text style={[styles.title]}>
+        {rowData.completed}
+        {'Study'}
+      </Text>
+    );
     var desc = null;
-    if (rowData.description && rowData.imageUrl)
+    console.log('rowData', rowData);
+    if (rowData)
       desc = (
         <View style={styles.descriptionContainer}>
-          <Image source={{uri: rowData.imageUrl}} style={styles.image} />
-          <Text style={[styles.textDescription]}>{rowData.description}</Text>
+          {/* <Image source={{uri: rowData.imageUrl}} style={styles.image} /> */}
+          <Image
+            source={require('../../assets/images/bg/1.jpg')}
+            style={styles.image}
+          />
+          <Text style={[styles.textDescription]}>{rowData.date}</Text>
+          <Text style={[styles.textDescription]}>{rowData.start_time}</Text>
+          <Text style={[styles.textDescription]}>{rowData.duration}</Text>
         </View>
       );
 
@@ -48,7 +82,7 @@ export const TimelineView = (props: Props) => {
       <View style={styles.container}>
         <Timeline
           style={styles.list}
-          data={data}
+          data={timeline}
           // separator
           showTime={true}
           lineColor={'#007AFF'}
@@ -57,6 +91,9 @@ export const TimelineView = (props: Props) => {
           renderDetail={renderDetail}
           onEventPress={() => {}}
           timeContainerStyle={{minWidth: 72}}
+          // rowContainerStyle={styles.listView}
+          // eventDetailStyle={styles.listView}
+          detailContainerStyle={styles.listView}
         />
       </View>
     </View>
@@ -73,10 +110,16 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
   },
+  listView: {
+    backgroundColor: 'grey',
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
   descriptionContainer: {
     flexDirection: 'row',
@@ -89,6 +132,7 @@ const styles = StyleSheet.create({
   },
   textDescription: {
     marginLeft: 10,
-    color: 'gray',
+    // color: 'gray',
+    color: 'black',
   },
 });

@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   ImageBackground,
   Dimensions,
+  Image,
 } from 'react-native';
 import {
   Btn,
@@ -28,6 +29,7 @@ import {
   startTimer,
   stopTimer,
 } from '../../redux/timer/actions';
+import {saveSession} from '../../redux/session/actions';
 
 interface Props {}
 
@@ -117,18 +119,31 @@ export const Home = (props: Props) => {
   const onConfettiComplete = () => {
     dispatch(stopTimer());
     setShowConfetti(false);
+    dispatch(
+      saveSession({
+        currentSession: {
+          id: '1',
+          duration: 10,
+          start_time: '12:00',
+          date: '30 july 2021',
+          completed: true,
+          tag: 'Study',
+        },
+      }),
+    );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: 'black'}]}>
+      {/* <SafeAreaView style={[styles.container, {backgroundColor: '#50A387'}]}> */}
       {/* <ImageBackground
         // 6
         // 7
         // 8
-        source={require('../../assets/images/bg/11.png')}
+        source={require('../../assets/images/avatar/avatar1.gif')}
         resizeMode="cover"
         style={styles.image}> */}
-      <Header rightIcon={'coin'} rightText={'3/10'} />
+      <Header rightIcon={'coin'} rightText={'3/10'} backgroundColor={'black'} />
       {showConfetti ? <Confetti onComplete={onConfettiComplete} /> : null}
       <ModalWrapper modalizeRef={modalizeRef} />
       <View style={styles.mainContainer}>
@@ -157,6 +172,14 @@ export const Home = (props: Props) => {
             </>
           )}
         </View>
+        {timerState.isRunning ? (
+          <View style={styles.avatarContainer}>
+            <Image
+              source={require('../../assets/images/avatar/avatar1.gif')}
+              style={styles.avatar}
+            />
+          </View>
+        ) : null}
 
         {/* <Tag text={'sdf'} /> */}
       </View>
@@ -166,9 +189,10 @@ export const Home = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {backgroundColor: '#50A387', flex: 1},
+  container: {flex: 1},
   mainContainer: {
     marginTop: 50,
+    flex: 1,
   },
   image: {
     width,
@@ -193,5 +217,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10,
+  },
+  avatarContainer: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
+  },
+  avatar: {
+    backgroundColor: 'red',
+    height: 150,
+    width: 180,
   },
 });

@@ -10,6 +10,7 @@ export type SessionType = {
   start_time?: string;
   completed?: boolean;
   date?: string;
+  tag?: string;
 };
 
 export interface ISession {

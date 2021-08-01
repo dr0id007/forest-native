@@ -188,6 +188,7 @@ dependencies {
 
     // added
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0' 
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
