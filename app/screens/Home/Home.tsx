@@ -39,6 +39,7 @@ export const Home = (props: Props) => {
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const modalizeRef = useRef<Modalize>(null);
   const timerState = useSelector(state => state.timer);
+  const tagsState = useSelector(state => state.tags);
   const dispatch = useDispatch();
 
   // will add later
@@ -58,20 +59,11 @@ export const Home = (props: Props) => {
       BackHandler.removeEventListener('hardwareBackPress', () => true);
   }, []);
 
-  const showNotification = (time?: string) => {
-    LocalNotification({
-      // ongoing: true,
-      id: 1,
-      channelId: '1',
-      message: `Time Remaining:  ${time}`,
-    });
-  };
-
   const showNotificationInBackground = (time?: string) => {
     runBackgroundTimer({
       run: () =>
         LocalNotification({
-          // ongoing: true,
+          ongoing: true,
           id: 1,
           channelId: '1',
           message: `Time Remaining:  ${time}`,
@@ -104,6 +96,18 @@ export const Home = (props: Props) => {
   const onGiveUp = () => {
     dispatch(stopTimer());
     stopBackgroundTimer();
+    dispatch(
+      saveSession({
+        currentSession: {
+          // id: '1',
+          duration: timerState.duration,
+          startTime: timerState.startTime,
+          date: Date.now().toString(),
+          completed: false,
+          tag: tagsState.currentTag,
+        },
+      }),
+    );
   };
 
   const onPause = () => {
@@ -122,19 +126,19 @@ export const Home = (props: Props) => {
     dispatch(
       saveSession({
         currentSession: {
-          id: '1',
-          duration: 10,
-          start_time: '12:00',
-          date: '30 july 2021',
+          // id: '1',
+          duration: timerState.duration,
+          startTime: timerState.startTime,
+          date: Date.now().toString(),
           completed: true,
-          tag: 'Study',
+          tag: tagsState.currentTag,
         },
       }),
     );
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: 'black'}]}>
+    <SafeAreaView style={[styles.container, , {backgroundColor: '#50A387'}]}>
       {/* <SafeAreaView style={[styles.container, {backgroundColor: '#50A387'}]}> */}
       {/* <ImageBackground
         // 6
@@ -143,7 +147,11 @@ export const Home = (props: Props) => {
         source={require('../../assets/images/avatar/avatar1.gif')}
         resizeMode="cover"
         style={styles.image}> */}
-      <Header rightIcon={'coin'} rightText={'3/10'} backgroundColor={'black'} />
+      <Header
+        rightIcon={'coin'}
+        rightText={'3/10'}
+        backgroundColor={'#50A387'}
+      />
       {showConfetti ? <Confetti onComplete={onConfettiComplete} /> : null}
       <ModalWrapper modalizeRef={modalizeRef} />
       <View style={styles.mainContainer}>

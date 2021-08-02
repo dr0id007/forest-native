@@ -7,7 +7,7 @@ export const Types = {
 export type SessionType = {
   id?: string;
   duration?: number;
-  start_time?: string;
+  startTime?: string;
   completed?: boolean;
   date?: string;
   tag?: string;

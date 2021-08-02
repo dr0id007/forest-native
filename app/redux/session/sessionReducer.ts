@@ -8,7 +8,7 @@ interface Action {
 const initialState = {
   currentSession: {
     duration: 0,
-    start_time: undefined,
+    startTime: undefined,
     completed: false,
     date: '1 Jan 1970',
   },

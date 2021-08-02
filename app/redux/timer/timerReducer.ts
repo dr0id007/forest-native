@@ -9,6 +9,7 @@ const initialState: ITimer = {
   isRunning: false,
   time: 1,
   angle: 10,
+  startTime: 0,
 };
 
 const reducer = (state = initialState, action: Action) => {
@@ -24,7 +25,7 @@ const reducer = (state = initialState, action: Action) => {
     }
 
     case Types.START_TIMER: {
-      return {...state, isRunning: true};
+      return {...state, isRunning: true, startTime: Date.now()};
     }
 
     case Types.STOP_TIMER: {

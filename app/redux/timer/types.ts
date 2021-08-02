@@ -9,4 +9,5 @@ export interface ITimer {
   isRunning?: boolean;
   time?: number;
   angle?: number;
+  startTime?: number;
 }

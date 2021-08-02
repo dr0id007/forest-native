@@ -3,20 +3,24 @@ import {View, StyleSheet, Image, Text} from 'react-native';
 import {Header} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import Timeline from 'react-native-timeline-flatlist';
-import {data} from '../../mockdata/timeline';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchHistory, deleteSession} from '../../redux/session/actions';
 import {SessionType} from '../../redux/session/types';
+import {format} from 'date-fns';
 
 interface Props {}
 
+interface ITimeline extends SessionType {
+  time?: string;
+}
+
 export const TimelineView = (props: Props) => {
-  const [timeline, setTimeline] = useState([]);
+  const [timeline, setTimeline] = useState<ITimeline[]>([]);
   const navigation = useNavigation();
   const sessionState = useSelector(state => state.session);
   const dispatch = useDispatch();
 
-  console.log('zxcxzc', sessionState);
+  // console.log('zxcxzc', sessionState);
   // fetch previous sessions:
   useEffect(() => {
     dispatch(fetchHistory());
@@ -26,13 +30,14 @@ export const TimelineView = (props: Props) => {
     navigation.navigate('Home');
   };
 
-  function formatSessionData<Type>(sessions: Type[]): Type {
+  function formatSessionData<Type>(sessions: Type[]) {
     const formatData = sessions.map((session: SessionType, index: number) => {
       return {
         ...session,
-        time: '11:00 am',
+        // time: '11:00 am',
       };
     });
+    console.log('len:', sessions.length);
     setTimeline(formatData);
   }
 
@@ -40,28 +45,49 @@ export const TimelineView = (props: Props) => {
     if (sessionState.sessions) formatSessionData(sessionState.sessions);
   }, [sessionState.sessions]);
 
-  const renderDetail = (rowData, sectionID, rowID) => {
+  const renderDetail = (rowData: ITimeline, sectionID, rowID) => {
     let title = (
-      <Text style={[styles.title]}>
-        {rowData.completed}
-        {'Study'}
+      <Text style={[styles.title, {color: 'black'}]}>
+        {rowData.date ? format(parseInt(rowData.date), 'mm:ss') : null}
+        {'    '}
+        {rowData.date ? format(parseInt(rowData.date), 'dd/mm/yy') : null}
       </Text>
     );
     var desc = null;
-    console.log('rowData', rowData);
-    if (rowData)
+    // console.log('rowData', rowData);
+    if (rowData) {
+      let textStyle = [
+        styles.textDescription,
+        {
+          color: 'black',
+          // backgroundColor: 'green'
+        },
+      ];
       desc = (
-        <View style={styles.descriptionContainer}>
+        <View
+          style={[
+            styles.descriptionContainer,
+            // styles.listView,
+            // {backgroundColor: 'black'},
+          ]}>
           {/* <Image source={{uri: rowData.imageUrl}} style={styles.image} /> */}
-          <Image
+
+          <Text style={textStyle}>
+            {/* time */}
+            {rowData.completed
+              ? "You've completed the sessin"
+              : "You've drop the session"}
+          </Text>
+
+          {/* <Image
             source={require('../../assets/images/bg/1.jpg')}
-            style={styles.image}
-          />
-          <Text style={[styles.textDescription]}>{rowData.date}</Text>
-          <Text style={[styles.textDescription]}>{rowData.start_time}</Text>
-          <Text style={[styles.textDescription]}>{rowData.duration}</Text>
+            style={[styles.image]}
+          /> */}
+
+          <Text style={textStyle}>{rowData.tag}</Text>
         </View>
       );
+    }
 
     return (
       <View style={{flex: 1}}>
@@ -84,16 +110,20 @@ export const TimelineView = (props: Props) => {
           style={styles.list}
           data={timeline}
           // separator
-          showTime={true}
+          // renderTime
+          showTime={false}
           lineColor={'#007AFF'}
           circleColor={'#007AFF'}
-          innerCircle={'icon'}
+          // innerCircle={'icon'}
           renderDetail={renderDetail}
           onEventPress={() => {}}
-          timeContainerStyle={{minWidth: 72}}
-          // rowContainerStyle={styles.listView}
-          // eventDetailStyle={styles.listView}
-          detailContainerStyle={styles.listView}
+          timeContainerStyle={{minWidth: 50}}
+          detailContainerStyle={[
+            styles.listView,
+            // {
+            //   backgroundColor: '#50A387',
+            // },
+          ]}
         />
       </View>
     </View>
@@ -111,18 +141,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   listView: {
-    backgroundColor: 'grey',
-    padding: 10,
+    // padding: 10,
     margin: 10,
+    marginTop: -10,
     borderRadius: 10,
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'black',
   },
   descriptionContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     paddingRight: 50,
   },
   image: {
@@ -131,8 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   textDescription: {
-    marginLeft: 10,
-    // color: 'gray',
-    color: 'black',
+    marginTop: 10,
+    // marginLeft: 10,
   },
 });
